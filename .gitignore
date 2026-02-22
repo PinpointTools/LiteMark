@@ -1,0 +1,9 @@
+.lite_workspace.lua
+
+/bin
+/dist
+
+neutralino.js
+
+.storage
+*.log
