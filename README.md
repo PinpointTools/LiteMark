@@ -3,9 +3,6 @@ A lightweight markdown editor. No Popups, no auto-updates, no nothing getting in
 
 ![Made in Neutralinojs](https://img.shields.io/badge/Made%20with-Neutralinojs-f89901?style=flat-square&logo=Neutralinojs&logoColor=white) ![License MIT](https://img.shields.io/badge/License-MIT-FF0000?style=flat-square)
 
-## Preview:
-![Video Preview 1](readme/Preview-1.mp4)
-
 ## Why choose this?
 [I](https://codedave.pages.dev/) wanted a drag-and-drop markdown editor. Native and barely taking any resources. I didn't want to use Visual Studio Code or use a website. I wanted native.
 
@@ -52,3 +49,8 @@ Absoultely! You help out the app by testing it and finding bugs. :)
 | Neutralino.js | Lightweight cross-platform with HTML, CSS and JavaScript. |
 | Jetbrains Mono | Sickass font for the editor. Heavily reccomended to use. |
 | GPT-5.3-Codex | Best LLM to use for coding by far (in my expirience). |
+
+---
+
+## Preview
+<video src="readme/Preview-1.mp4" alt="Video Preview 1" />
