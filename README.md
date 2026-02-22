@@ -25,7 +25,7 @@ Tauri was my second option, but honestly? This app is just a "drag and drop" kin
 ---
 
 # CONTRIBUTING
-Read the [Contributing Markdown](CONTRIBUTING.MD) first before you make any PRs.
+Read the [Contributing Markdown](CONTRIBUTING.md) first before you make any PRs.
 
 ## Can we fork this and modify it?
 Absoultely! You can add as many things as you like. Extensions, themes, and such!
