@@ -1,5 +1,6 @@
 # LiteMark
-A lightweight markdown editor. No Popups, no updates, no nothing getting in your way making your markdown file. All is local and privacy and user first.
+A lightweight markdown editor. No Popups, no auto-updates, no nothing getting in your way making your markdown file. All is local and privacy and user first.
+
 ![Made in Neutralinojs](https://img.shields.io/badge/Made%20with-Neutralinojs-f89901?style=flat-square&logo=Neutralinojs&logoColor=white) ![License MIT](https://img.shields.io/badge/License-MIT-FF0000?style=flat-square)
 
 ## Why choose this?
