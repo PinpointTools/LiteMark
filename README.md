@@ -3,6 +3,9 @@ A lightweight markdown editor. No Popups, no auto-updates, no nothing getting in
 
 ![Made in Neutralinojs](https://img.shields.io/badge/Made%20with-Neutralinojs-f89901?style=flat-square&logo=Neutralinojs&logoColor=white) ![License MIT](https://img.shields.io/badge/License-MIT-FF0000?style=flat-square)
 
+## Preview:
+![Video Preview 1](readme/Preview-1.mp4)
+
 ## Why choose this?
 [I](https://codedave.pages.dev/) wanted a drag-and-drop markdown editor. Native and barely taking any resources. I didn't want to use Visual Studio Code or use a website. I wanted native.
 
@@ -20,7 +23,7 @@ Electron in the big 26 is wild 🥀
 Anyways, the reason is because of memory usage and storage hogging. I wanted to make a lightweight app instead of a memory and storage hogger.
 
 ### Why not use Tauri?
-Tauri was my second option, but honestly? This app is just a "drag and drop" kinda thing app and Tauri for this app? Yeah, no. There's no backend to the system and honestly wont ever add one.
+Tauri was my second option, but honestly? This app is just a "drag and drop" kinda thing app and Tauri for this app? Yeah, no. There's no backend to the system *probably* wont ever add one.
 
 ---
 
