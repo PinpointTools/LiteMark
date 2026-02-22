@@ -49,8 +49,3 @@ Absoultely! You help out the app by testing it and finding bugs. :)
 | Neutralino.js | Lightweight cross-platform with HTML, CSS and JavaScript. |
 | Jetbrains Mono | Sickass font for the editor. Heavily reccomended to use. |
 | GPT-5.3-Codex | Best LLM to use for coding by far (in my expirience). |
-
----
-
-## Preview
-<video src="readme/Preview-1.mp4" alt="Video Preview 1" />
