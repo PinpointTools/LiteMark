@@ -24,6 +24,12 @@ jobs:
       - name: Build app
         run: pnpm dlx @neutralinojs/neu@latest build --release
       
+      - name: Check Folders
+        run: |
+          ls
+          ls dist
+          ls dist/litemark
+    
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
