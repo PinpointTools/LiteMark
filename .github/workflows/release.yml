@@ -37,6 +37,9 @@ jobs:
       - name: Install NeutralinoJS
         run: pnpm add -g @neutralinojs/neu@latest
 
+      - name: General Client Library
+        run: neu update
+
       - name: Compile app
         run: neu build --release
       
