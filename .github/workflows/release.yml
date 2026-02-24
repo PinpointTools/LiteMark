@@ -66,13 +66,18 @@ jobs:
         run: |
           git fetch --tags
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          echo "COMMITS<<EOF" >> $GITHUB_OUTPUT
+
           if [ -z "$LAST_TAG" ]; then
-            git log --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+            COMMITS=$(git log --pretty=format:"- %s (%h)")
           else
-            git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+            COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)")
           fi
-          echo "EOF" >> $GITHUB_OUTPUT
+
+          {
+            echo "COMMITS<<END"
+            echo "$COMMITS"
+            echo "END"
+          } >> $GITHUB_OUTPUT
 
       - name: Create Git Tag (if not exists) # this is p smart actually
         run: |
