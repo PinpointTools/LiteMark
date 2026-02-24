@@ -53,17 +53,67 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - uses: actions/download-artifact@v4
         with:
           path: artifacts/
       
+      - name: Generate commit list
+        id: commits
+        run: |
+          git fetch --tags
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "COMMITS<<EOF" >> $GITHUB_OUTPUT
+          if [ -z "$LAST_TAG" ]; then
+            git log --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+          else
+            git log ${LAST_TAG}..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+          fi
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Git Tag (if not exists) # this is p smart actually
+        run: |
+          git fetch --tags
+          if git rev-parse "${{ inputs.version }}" >/dev/null 2>&1; then
+            echo "Tag already exists"
+          else
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
+            git tag -a ${{ inputs.version }} -m "Release ${{ inputs.version }}"
+            git push origin ${{ inputs.version }}
+          fi
+
       - name: Create Release
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: ${{ inputs.version }}
+          tag_name: ${{ inputs.version }}
           prerelease: ${{ inputs.prerelease }}
-          title: 'Release ${{ inputs.version }}'
-          body: ${{ inputs.description }}
+          title: 'LiteMark: ${{ inputs.version }}'
+          body: |
+            # LiteMark version ${{ inputs.version }}!!!
+            ${{ inputs.description }}
+
+            ---
+
+            ## Depending on your operating system, you must download one of these:
+            | Filename | CPU Arch |
+            | - | - |
+            | LiteMark-linux_x64 | x86_64 |
+            | LiteMark-linux_armhf | armf |
+            | LiteMark-linux_arm64 | arm64 |
+            | LiteMark-mac_x64 | x86_64 |
+            | LiteMark-mac_universal | x86_64 and arm64 |
+            | LiteMark-mac_arm64 | arm64 |
+            | LiteMark-win_x64 | x86_64 |
+
+            ## Another important thing:
+            You must install **resources.neu**. This what launches the app. Without it, it would be useless.
+
+            ### Commits
+            ${{ steps.commits.outputs.COMMITS }}
           files: |
-            artifacts/neutralino-binaries/**
+            artifacts/neutralino-binaries
