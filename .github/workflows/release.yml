@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: neutralino-binaries
-          path: dist/litemark
+          path: dist/litemark/
 
   finalize:
     needs: release
