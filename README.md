@@ -3,6 +3,9 @@ A lightweight markdown editor. No Popups, no auto-updates, no nothing getting in
 
 ![Made in Neutralinojs](https://img.shields.io/badge/Made%20with-Neutralinojs-f89901?style=flat-square&logo=Neutralinojs&logoColor=white) ![License MIT](https://img.shields.io/badge/License-MIT-FF0000?style=flat-square)
 
+> [!IMPORTANT]
+> Since barely anyone is gonna see this, I plan to make this like a note app. It'll still be lightweight and fast, but it'll have a file explorer in the left with your notes. Sub-folders, and such.
+
 ## Why choose this?
 [I](https://codedave.pages.dev/) wanted a drag-and-drop markdown editor. Native and barely taking any resources. I didn't want to use Visual Studio Code or use a website. I wanted native.
 

@@ -1,101 +1,8 @@
 (function () {
-    const editor = document.getElementById("editor");
-    const preview = document.getElementById("markdownPreview");
-    const dropZone = document.getElementById("dropZone");
-    const fileLabel = document.getElementById("fileLabel");
+    const app = window.LiteMark || (window.LiteMark = {});
 
-    const initialMarkdown = "# LiteMark\n\nWrite markdown on the left.\n\n- Drag and drop a `.md` file to load it.\n- Preview updates live on the right.";
-
-    editor.value = initialMarkdown;
-    render(editor.value);
-
-    editor.addEventListener("input", () => {
-        render(editor.value);
-        syncScroll(editor, preview, "preview");
-    });
-
-    let suppressEditorScroll = false;
-    let suppressPreviewScroll = false;
-    editor.addEventListener("scroll", () => {
-        if (suppressEditorScroll) {
-            return;
-        }
-        syncScroll(editor, preview, "preview");
-    });
-    preview.addEventListener("scroll", () => {
-        if (suppressPreviewScroll) {
-            return;
-        }
-        syncScroll(preview, editor, "editor");
-    });
-
-    let dragDepth = 0;
-    window.addEventListener("dragenter", (event) => {
-        event.preventDefault();
-        dragDepth += 1;
-        dropZone.classList.add("active");
-    });
-
-    window.addEventListener("dragover", (event) => {
-        event.preventDefault();
-    });
-
-    window.addEventListener("dragleave", (event) => {
-        event.preventDefault();
-        dragDepth = Math.max(0, dragDepth - 1);
-        if (dragDepth === 0) {
-            dropZone.classList.remove("active");
-        }
-    });
-
-    window.addEventListener("drop", async (event) => {
-        event.preventDefault();
-        dragDepth = 0;
-        dropZone.classList.remove("active");
-
-        const droppedFile = event.dataTransfer?.files?.[0];
-        if (!droppedFile) {
-            return;
-        }
-
-        const fileName = droppedFile.name || "Untitled";
-        if (!/\.(md|markdown|txt)$/i.test(fileName)) {
-            fileLabel.textContent = "Unsupported file type";
-            return;
-        }
-
-        const text = await droppedFile.text();
-        editor.value = text;
-        render(text);
-        fileLabel.textContent = fileName;
-    });
-
-    function render(markdown) {
-        preview.innerHTML = markdownToHtml(markdown);
-    }
-
-    function syncScroll(source, target, targetSide) {
-        const sourceMax = source.scrollHeight - source.clientHeight;
-        const sourceRatio = sourceMax > 0 ? source.scrollTop / sourceMax : 0;
-
-        const targetMax = target.scrollHeight - target.clientHeight;
-        const targetScrollTop = sourceRatio * targetMax;
-
-        if (targetSide === "preview") {
-            suppressPreviewScroll = true;
-            target.scrollTop = targetScrollTop;
-            requestAnimationFrame(() => {
-                suppressPreviewScroll = false;
-            });
-            return;
-        }
-
-        suppressEditorScroll = true;
-        target.scrollTop = targetScrollTop;
-        requestAnimationFrame(() => {
-            suppressEditorScroll = false;
-        });
-    }
+    app.services = app.services || {};
+    app.services.markdownToHtml = markdownToHtml;
 
     function markdownToHtml(markdown) {
         const lines = markdown.replace(/\r/g, "").split("\n");
@@ -105,11 +12,12 @@
 
         for (let i = 0; i < lines.length; i += 1) {
             const line = lines[i];
-
+            
             if (line.trim().startsWith("```")) {
                 if (inCodeBlock) {
                     html.push("</code></pre>");
-                } else {
+                }
+                else {
                     if (inList) {
                         html.push("</ul>");
                         inList = false;
@@ -120,8 +28,9 @@
                 continue;
             }
 
+            
             if (line.trim().startsWith("---")) {
-                html.push("<hr/>")
+                html.push("<hr/>");
                 continue;
             }
 
