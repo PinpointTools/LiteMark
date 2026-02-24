@@ -21,14 +21,11 @@ jobs:
         with:
           version: latest
 
-      - name: Build app
-        run: pnpm dlx @neutralinojs/neu@latest build --release
-      
-      - name: Check Folders
-        run: |
-          ls
-          ls dist
-          ls dist/litemark
+      - name: Install NeutralinoJS
+        run: pnpm add -g @neutralinojs/neu@latest
+
+      - name: Compile app
+        run: neu build --release
     
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
