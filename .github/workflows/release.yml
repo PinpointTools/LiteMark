@@ -12,8 +12,8 @@ on:
         default: false
       description:
         description: 'Release notes/body'
+        type: string
         required: false
-        default: 'New Litemark release'
 
 permissions:
   contents: write
@@ -104,6 +104,13 @@ jobs:
 
             ---
 
+            ## Commits
+            ${{ steps.commits.outputs.COMMITS }}
+
+            ---
+            
+            # ‼️ • READ THIS!! • ‼️
+
             ## Depending on your operating system, you must download one of these:
             | Filename | CPU Arch |
             | - | - |
@@ -117,7 +124,4 @@ jobs:
 
             ## Another important thing:
             You must install **resources.neu**. This what launches the app. Without it, it would be useless.
-
-            ### Commits
-            ${{ steps.commits.outputs.COMMITS }}
           files: artifacts/neutralino-binaries/**
