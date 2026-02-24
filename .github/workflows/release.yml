@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   release:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: neutralino-binaries
-          path: dist/litemark-release.zip
+          path: dist/litemark
 
   finalize:
     needs: release
