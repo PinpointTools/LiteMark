@@ -104,55 +104,19 @@ jobs:
 
             ---
 
-            <details>
-              <summary>‼️ READ THIS ‼️</summary>
+            ## Depending on your operating system, you must download one of these:
+            | Filename | CPU Arch |
+            | - | - |
+            | LiteMark-linux_x64 | x86_64 |
+            | LiteMark-linux_armhf | armf |
+            | LiteMark-linux_arm64 | arm64 |
+            | LiteMark-mac_x64 | x86_64 |
+            | LiteMark-mac_universal | x86_64 and arm64 |
+            | LiteMark-mac_arm64 | arm64 |
+            | LiteMark-win_x64 | x86_64 |
 
-              <h2>Depending on your operating system, you must download one of these:</h2>
-              <table>
-                <tr>
-                  <th>Filename</th>
-                  <th>CPU Architechture</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-linux_x64</th>
-                  <th>x86_64</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-linux_armhf</th>
-                  <th>armf</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-linux_arm64</th>
-                  <th>arm64</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-mac_x64</th>
-                  <th>x86_64</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-mac_universal</th>
-                  <th>x86_64 and arm64</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-mac_arm64</th>
-                  <th>arm64</th>
-                </tr>
-
-                <tr>
-                  <th>LiteMark-win_x64</th>
-                  <th>x86_64</th>
-                </tr>
-              </table>
-
-              <h2>Another important thing:</h2>
-              <p>You must install **resources.neu**. This what launches the app. Without it, it would be useless.</p>
-            </details>
+            ## Another important thing:
+            You must install **resources.neu**. This what launches the app. Without it, it would be useless.
 
             ### Commits
             ${{ steps.commits.outputs.COMMITS }}
