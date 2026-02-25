@@ -21,6 +21,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    scrollbar-width: none;
 }
 
 html,
@@ -62,6 +63,31 @@ body {
     margin: 0;
     font-size: 0.8rem;
     color: var(--mutedTextColor);
+}
+
+.topbarActions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#exportHtmlButton {
+    border: 1px solid var(--outlineColor);
+    background: #151a1f;
+    color: var(--textColor);
+    border-radius: 6px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+#exportHtmlButton:hover:enabled {
+    border-color: var(--accentColor);
+}
+
+#exportHtmlButton:disabled {
+    opacity: 0.65;
+    cursor: wait;
 }
 
 .workspace {
@@ -198,6 +224,15 @@ body {
 }
 
 @media (max-width: 900px) {
+    .topbar {
+        flex-wrap: wrap;
+    }
+
+    .topbarActions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
     .workspace {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;

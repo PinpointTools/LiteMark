@@ -12,7 +12,10 @@
   <div class="app" id="appRoot">
     <header class="topbar">
       <h1>LiteMark</h1>
-      <p id="fileLabel">No file loaded</p>
+      <div class="topbarActions">
+        <p id="fileLabel">No file loaded</p>
+        <button id="exportHtmlButton" type="button">Export HTML</button>
+      </div>
     </header>
 
     <div class="workspace">
@@ -33,10 +36,12 @@
   </div>
 
   <!-- scripts -->
+  <script src="/neutralino.js"></script>
   <script src="/js/core/appContext.js"></script>
   <script src="/js/core/markdownParser.js"></script>
   <script src="/js/features/syncScroll.js"></script>
   <script src="/js/features/editorPreview.js"></script>
+  <script src="/js/features/exportHtml.js"></script>
   <script src="/js/features/dragDrop.js"></script>
 </body>
 

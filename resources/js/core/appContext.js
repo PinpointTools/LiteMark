@@ -1,11 +1,21 @@
 (function () {
+    if (
+        window.Neutralino &&
+        typeof window.Neutralino.init === "function" &&
+        typeof window.NL_PORT === "number" &&
+        typeof window.NL_TOKEN === "string"
+    ) {
+        window.Neutralino.init();
+    }
+
     const app = window.LiteMark || (window.LiteMark = {});
 
     app.dom = {
         editor: document.getElementById("editor"),
         preview: document.getElementById("markdownPreview"),
         dropZone: document.getElementById("dropZone"),
-        fileLabel: document.getElementById("fileLabel")
+        fileLabel: document.getElementById("fileLabel"),
+        exportHtmlButton: document.getElementById("exportHtmlButton")
     };
 
     app.state = app.state || {
