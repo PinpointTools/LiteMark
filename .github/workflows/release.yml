@@ -10,10 +10,6 @@ on:
         description: 'Mark as prerelease?'
         type: boolean
         default: false
-      description:
-        description: 'Release notes/body'
-        type: string
-        required: false
 
 permissions:
   contents: write
@@ -100,7 +96,7 @@ jobs:
           title: 'LiteMark: ${{ inputs.version }}'
           body: |
             # LiteMark version ${{ inputs.version }}!!!
-            ${{ inputs.description }}
+            Check out the summarized updates in [CHANGELOG.md](https://github.com/PinpointTools/LiteMark/blob/main/CHANGELOG.md)
 
             ---
 
