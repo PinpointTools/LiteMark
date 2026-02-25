@@ -8,7 +8,87 @@
         const lines = markdown.replace(/\r/g, "").split("\n");
         const html = [];
         let inCodeBlock = false;
-        let inList = false;
+        const listStack = [];
+
+        function getIndentSize(indentText) {
+            return indentText.replace(/\t/g, "  ").length;
+        }
+
+        function closeCurrentListLevel() {
+            if (listStack.length === 0) {
+                return;
+            }
+
+            const current = listStack[listStack.length - 1];
+            if (current.openLi) {
+                html.push("</li>");
+            }
+            html.push(`</${current.type}>`);
+            listStack.pop();
+        }
+
+        function closeListsToIndent(targetIndent) {
+            while (listStack.length > 0 && listStack[listStack.length - 1].indent > targetIndent) {
+                closeCurrentListLevel();
+            }
+        }
+
+        function closeAllLists() {
+            while (listStack.length > 0) {
+                closeCurrentListLevel();
+            }
+        }
+
+        function handleListItem(line) {
+            const listMatch = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)$/);
+            if (!listMatch) {
+                return false;
+            }
+
+            const indent = getIndentSize(listMatch[1]);
+            const marker = listMatch[2];
+            const content = listMatch[3];
+            const listType = /\d+\./.test(marker) ? "ol" : "ul";
+
+            if (listStack.length === 0) {
+                html.push(`<${listType}>`);
+                listStack.push({ indent, type: listType, openLi: false });
+            }
+            else {
+                const current = listStack[listStack.length - 1];
+
+                if (indent > current.indent) {
+                    if (!current.openLi) {
+                        return false;
+                    }
+                    html.push(`<${listType}>`);
+                    listStack.push({ indent, type: listType, openLi: false });
+                }
+                else {
+                    closeListsToIndent(indent);
+                    if (listStack.length === 0) {
+                        html.push(`<${listType}>`);
+                        listStack.push({ indent, type: listType, openLi: false });
+                    }
+                    else {
+                        const top = listStack[listStack.length - 1];
+                        if (top.indent !== indent || top.type !== listType) {
+                            closeCurrentListLevel();
+                            html.push(`<${listType}>`);
+                            listStack.push({ indent, type: listType, openLi: false });
+                        }
+                    }
+                }
+            }
+
+            const targetList = listStack[listStack.length - 1];
+            if (targetList.openLi) {
+                html.push("</li>");
+            }
+            html.push(`<li>${inlineMarkdown(content)}`);
+            targetList.openLi = true;
+            return true;
+        }
 
         for (let i = 0; i < lines.length; i += 1) {
             const line = lines[i];
@@ -18,10 +98,7 @@
                     html.push("</code></pre>");
                 }
                 else {
-                    if (inList) {
-                        html.push("</ul>");
-                        inList = false;
-                    }
+                    closeAllLists();
                     html.push("<pre><code>");
                 }
                 inCodeBlock = !inCodeBlock;
@@ -30,6 +107,7 @@
 
             
             if (line.trim().startsWith("---")) {
+                closeAllLists();
                 html.push("<hr/>");
                 continue;
             }
@@ -43,10 +121,7 @@
                 const headers = splitTableRow(line);
                 const alignments = getTableAlignments(lines[i + 1]);
                 if (headers.length > 0 && headers.length === alignments.length) {
-                    if (inList) {
-                        html.push("</ul>");
-                        inList = false;
-                    }
+                    closeAllLists();
 
                     html.push("<table><thead><tr>");
                     for (let col = 0; col < headers.length; col += 1) {
@@ -75,38 +150,23 @@
             }
 
             if (!line.trim()) {
-                if (inList) {
-                    html.push("</ul>");
-                    inList = false;
-                }
+                closeAllLists();
                 continue;
             }
 
             const headingMatch = line.match(/^(#{1,3})\s+(.*)$/);
             if (headingMatch) {
-                if (inList) {
-                    html.push("</ul>");
-                    inList = false;
-                }
+                closeAllLists();
                 const level = headingMatch[1].length;
                 html.push(`<h${level}>${inlineMarkdown(headingMatch[2])}</h${level}>`);
                 continue;
             }
 
-            const listMatch = line.match(/^[-*]\s+(.*)$/);
-            if (listMatch) {
-                if (!inList) {
-                    html.push("<ul>");
-                    inList = true;
-                }
-                html.push(`<li>${inlineMarkdown(listMatch[1])}</li>`);
+            if (handleListItem(line)) {
                 continue;
             }
 
-            if (inList) {
-                html.push("</ul>");
-                inList = false;
-            }
+            closeAllLists();
 
             if (line.startsWith("> ")) {
                 html.push(`<blockquote>${inlineMarkdown(line.slice(2))}</blockquote>`);
@@ -116,9 +176,7 @@
             html.push(`<p>${inlineMarkdown(line)}</p>`);
         }
 
-        if (inList) {
-            html.push("</ul>");
-        }
+        closeAllLists();
         if (inCodeBlock) {
             html.push("</code></pre>");
         }
